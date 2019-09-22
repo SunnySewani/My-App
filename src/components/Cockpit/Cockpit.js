@@ -1,7 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './Cockpit.css';
 
 const Cockpit = (props) => {
+  
+  useEffect( ()=> {
+    console.log('[Cockpit.js] useEffect');
+    setTimeout(() => {
+      alert('saved data o cloud!');
+    }, 1000);
+    return () => {
+      console.log('[Cockpit.js] cleaning up done');
+    };
+
+  }, [] );
+
+  useEffect(() => {
+    console.log('Cockpit.js] useEffect2');
+    return () => {
+      console.log('[Cockpit.js] cleaning up done useEffect2');
+    };
+  });
+
   const assignedClasses = [];
   let buttonClass=''
 
@@ -18,7 +37,7 @@ const Cockpit = (props) => {
 
   return(
     <div className={classes.cockpit}>
-    <h1>Hi, I am a react app </h1>
+    <h1>{props.title}</h1>
 
   <p className = {assignedClasses.join(' ')}> This is really working</p>
   <button

@@ -5,6 +5,14 @@ import classes from './App.css';
 
 
 class App extends Component {
+
+constructor(props){
+  super(props);
+  console.log('[App.js] constructor');
+}
+
+
+
 state = {
   persons: [
     {id: 'fs', name: 'Hrithik', age: 25},
@@ -12,7 +20,31 @@ state = {
     {name:'dss', name: 'Sumit', age: 22}
   ],
   otherState: 'something else',
-  showPersons: false
+  showPersons: false,
+  hideButton: true
+}
+
+static getDerivedStateFromProps(props, state){
+  console.log('[App.js] getDerivedStateFromProps', props);
+  return state;
+}
+
+// componentWillMount(){
+//   console.log('[App.js] componentWillMount');
+// }
+componentDidMount(){
+console.log('[App.js] componentDidMount');
+}
+
+
+shouldComponentUpdate(nextProps, nextState){
+  console.log('[App.js] shouldComponentUpdate');
+  return true;
+ }
+
+componentDidUpdate(){
+  console.log('[App.js] did update');
+  
 }
 
 deletePersonHandler = (personIndex) => {
@@ -47,16 +79,17 @@ render()
 
 
 {
+  console.log('[App.js] render');
 
 let persons = null;
 let buttonClass =  '';
 if(this.state.showPersons){
-  persons =
+  persons = (
             <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.changeNameHandler}/>
-             ;
+  );
 
   buttonClass = classes.Red;
 
@@ -67,16 +100,26 @@ if(this.state.showPersons){
 
   return (
     <div className={classes.App}>
-    <Cockpit showPersons ={this.state.showPersons}
+      <button
+      onClick= {() => {
+        this.setState({hideButton : false});
+      } }  
+      >  Remove cockpit 
+      </button>
+      {this.state.hideButton ? 
+    <Cockpit  
+    title = {this.props.appTitle}
+    showPersons ={this.state.showPersons}
     persons={this.state.persons}
     clicked={this.toggleHandler}
-    />
+      /> : null}
+      
       {persons}
 
     </div>
   );
 }
-  // return React.createElement('div',{className:'App'}, React.createElement('h1',null, 'Hi I\'m a react app'))
+  // return React.cr  eateElement('div',{className:'App'}, React.createElement('h1',null, 'Hi I\'m a react app'))
  }
 
 export default App;
